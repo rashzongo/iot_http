@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link href="/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+	  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="/lib/vue.min.js"></script>
+    <script src="/lib/lodash.min.js"></script>
+    <script src="/js/lightScript.js"></script>
+  	<title>Gestion d'objets connectés</title>
+ </head>
+<body>
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-2">
+	            <div class="sidebar-nav-fixed affix">
+					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<p>IoT - HTTP</p>
+					    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Accueil</a>
+					    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Luminosités et lumières</a>
+					    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Températures et radiateurs</a>
+					    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">A propos du système</a>
+					</div>
+				</div>
+			</div>
+		    <div class="col-md-10">
+				<div class="tab-content" id="v-pills-tabContent">
+					<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel">
+						<div class="container">
+							<div class="page-header">
+								<h1>IoT - Projet HTTP</h1>      
+							</div>
+							<div  class="text">
+								<p>Université de Nice Sophia-Antipolis</p>
+								<p>Master 1 Miage</p>
+								<p>Etudiants :
+									<ul>
+										<li>BOUKADIDA Imen </li>
+										<li>ZONGO S. H. Rachida</li>
+									</ul>
+								</p>
+								<p>Enseignant : M. MENEZ Gilles</p>   
+							</div>      
+						</div>
+					</div>
+					<div class="tab-pane fade" id="v-pills-profile" role="tabpanel">
+						<div class="container">
+							<h1>Luminosités et lumières</h1>
+							
+							<div class="text" id="lightApp">
+								<a v-bind:href=(server+'/lights') target="_blank">
+									Toutes les données des capteurs de lumière
+								</a>
+								<br>
+					            <div class="component row" v-for="l,index in lights">
+					            	<div class="col-md-6">
+						                <p>ID Capteur : {{l.mac_add}}</p>
+						                <p v-if="l.powered">Etat : ON</p>
+						                <p v-else>Etat : OFF</p>
+					                </div>
+					            	<div class="col-md-6">
+					            		<button v-if="l.powered" v-on:click="offLight(l.mac_add)">OFF</button>
+					            		<button v-else v-on:click="onLight(l.mac_add)">ON</button>
+					            		<div>
+					            			<a v-bind:href=(server+'/light/'+l.mac_add) target="_blank">
+					            				Voir toutes les données du capteur
+					            			</a>
+					            		</div>
+					            	</div>
+					            </div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade .col-sm-8" id="v-pills-messages" role="tabpanel">
+					  	<div class="container">
+					  		<h1>Températures et radiateurs</h1>
+						  	<div class="text" id="tempApp">
+								<a v-bind:href=(server+'/temperatures') target="_blank">
+									Toutes les données des capteurs de temperature
+								</a>
+								<br>
+					            <div class="component row" v-for="t,index in temperatures">
+					            	<div class="col-md-6">
+						                <p>ID Capteur : {{t.mac_add}}</p>
+						                <p v-if="t.powered">Etat : ON</p>
+						                <p v-else>Etat : OFF</p>
+					                </div>
+					            	<div class="col-md-6">
+					            		<button v-if="t.powered" v-on:click="offRadiator(t.mac_add)">OFF</button>
+					            		<button v-else v-on:click="onRadiator(t.mac_add)">ON</button>
+					            		<div>
+					            			<a v-bind:href=(server+'/temperature/'+t.mac_add) target="_blank">
+					            				Voir toutes les données du capteur
+					            			</a>
+					            		</div>
+					            	</div>
+					            </div>
+							</div>
+						</div>
+					</div>
+					  	 	
+					<div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+						<div class="container text-justify">
+							<h1 class="">A propos du système</h1>
+							<div class="text">
+								Ce système se base sur l'architecture ci-dessous :
+								<br><br>
+								<img src="/css/architecture.png" style="display: block;height: 30%; margin: auto">
+								<br>
+								Pour la persistance de données, nous avons utilisé une bases de données MongoDB pour une approche de structure orientée Document, plus adaptée pour la gestion des données de capteurs qui peuvent être importantes.<br><br>
+								Chaque capteur (de lumière ou de temperature) possède un document dans la base de données ou sont stockées les différentes données qu'il a émises.<br><br>
+								Nous avons également une interface web qui nous permet de visualiser les données de chaque capteur et aussi de télécharger les lumières ou radiateurs associés. <br><br>
+								Tous les échanges passent au travers d'un serveur JS via des requêtes GET/POST.
+								<br><br>
+								Sur l'interface liste l'ensemble des capteurs ayant envoyé au moins une fois leur données sur le serveur.<br>
+								<br>
+								<br>
+								<br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>
