@@ -48,7 +48,7 @@ exports.registerLight = function(formData, callback) {
 }
 
 exports.registerTemperature = function(formData, callback) {
-	console.log("donnee recue" + JSON.stringify(formData));
+	//console.log("donnee recue" + JSON.stringify(formData));
 	registerData(tempColl, formData, callback);
 }
 
@@ -73,6 +73,7 @@ function countCapteursInCollection(collection, callback) {
 }
 
 function registerData(coll, formData, callback) {
+    //console.log("*****" + JSON.stringify(formData));
 	MongoClient.connect(dbUrl, function(err, client) {
         var db = client.db(dbName);
         if(!err) {
@@ -102,8 +103,8 @@ function addDataInCollection(coll, formData, callback){
         var db = client.db(dbName);
 		if(!err) {
 			let power;
-			console.log(formData.powered);
-			if(parseFloat(formData.powered) == 0.0){
+			//console.log(formData.powered);
+			if(parseFloat(formData.powered) == 0 || formData.powered == 0){
 				power = false;
 			}
 			else {
@@ -153,7 +154,7 @@ function addNewObjectInCollection(coll, formData, callback){
 		var db = client.db(dbName);
 	    if(!err) {
 	    	let power;
-			if(parseFloat(formData.powered) == 0.0){
+            if(parseFloat(formData.powered) == 0 || formData.powered == 0){
 				power = false;
 			}
 			else {
@@ -225,6 +226,7 @@ function getCapteurValues(coll, mac_add, callback) {
                         "msg": "erreur lors du find"
                     };
                 }
+                //console.log(reponse);
                 callback(reponse);
             });
         } else {

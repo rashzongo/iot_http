@@ -10,7 +10,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="/lib/vue.min.js"></script>
     <script src="/lib/lodash.min.js"></script>
-    <script src="/js/lightScript.js"></script>
+    <script src="/js/capteursScript.js"></script>
   	<title>Gestion d'objets connectés</title>
  </head>
 <body>
@@ -109,14 +109,19 @@
 							<div class="text">
 								Ce système se base sur l'architecture ci-dessous :
 								<br><br>
-								<img src="/css/architecture.png" style="display: block;height: 30%; margin: auto">
+								<img src="/css/architecture.png" style="display:block;width:40%; margin:auto">
 								<br>
 								Pour la persistance de données, nous avons utilisé une bases de données MongoDB pour une approche de structure orientée Document, plus adaptée pour la gestion des données de capteurs qui peuvent être importantes.<br><br>
-								Chaque capteur (de lumière ou de temperature) possède un document dans la base de données ou sont stockées les différentes données qu'il a émises.<br><br>
+								Chaque capteur (de lumière ou de temperature) possède un document dans la base de données où sont stockées les différentes données qu'il a émises et les donnée de sonfiguration.<br>
+								On peut ainsi ajouté plusieurs autres capteurs au système<br>
+								Pour un y ajouter un objet (temperature et/ou lumière) il suffit de configurer ce dernier pour qu'il envoie et lise des données sur le serveur (comme dans le fichier "code_esp/code_esp.ino").
+								<br><br>
 								Nous avons également une interface web qui nous permet de visualiser les données de chaque capteur et aussi de télécharger les lumières ou radiateurs associés. <br><br>
 								Tous les échanges passent au travers d'un serveur JS via des requêtes GET/POST.
 								<br><br>
-								Sur l'interface liste l'ensemble des capteurs ayant envoyé au moins une fois leur données sur le serveur.<br>
+								L'interface (onglets "Luminostés et lumières" et "Températures et radiateurs") liste l'ensemble des capteurs ayant envoyé au moins une fois leur données sur le serveur.<br>
+								Et peut depuis cette interface accéder à l'historique des données de chaque objet.<br>
+								On peut également modifier les états (allumer/éteindre) des ampoules et radiateurs.
 								<br>
 								<br>
 								<br>

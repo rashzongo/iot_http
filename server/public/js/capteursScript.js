@@ -1,7 +1,6 @@
 window.onload = init;
 
-var SERVER_URL = "http://10.154.98.66:3000";
-//var RESOURCE = "/light";
+var SERVER_URL = "http://10.188.220.34:3000";
 
 function init() {
     new Vue({

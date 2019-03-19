@@ -14,8 +14,6 @@ router.get('/', function(req,res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-router.get('/another', homeController.anotherFunction);
-
 //Temperature
 router.get('/temperature', jsonParser, temperatureController.index);
 
@@ -27,6 +25,9 @@ router.post('/temperature', jsonParser,  function(req, res, next) {
 });
 router.get('/temperature/:mac_add', jsonParser,  function(req, res, next) {
 	temperatureController.getRadiatorData(req.params.mac_add, req, res);
+});
+router.get('/temperature/:mac_add/state', jsonParser,  function(req, res, next) {
+	temperatureController.getRadiatorState(req.params.mac_add, req, res);
 });
 router.get('/temperature/:mac_add/on', jsonParser,  function(req, res, next) {
 	temperatureController.powerOnRadiator(req.params.mac_add, req, res);
@@ -51,6 +52,9 @@ router.post('/light', jsonParser,  function(req, res, next) {
 });
 router.get('/light/:mac_add', jsonParser,  function(req, res, next) {
 	lightController.getLightData(req.params.mac_add, req, res);
+});
+router.get('/light/:mac_add/state', jsonParser,  function(req, res, next) {
+	lightController.getLightState(req.params.mac_add, req, res);
 });
 router.get('/light/:mac_add/on', jsonParser,  function(req, res, next) {
 	lightController.powerOnLight(req.params.mac_add, req, res);

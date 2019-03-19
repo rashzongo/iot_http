@@ -14,8 +14,7 @@ exports.getAll = function(req, res) {
 }
 
 exports.registerLight = function(req, res) {
-	db.registerLight(req.headers, function(response){
-		console.log(req.headers);
+	db.registerLight(req.body, function(response){
 		res.send(response);
 	});
 }
@@ -31,6 +30,20 @@ exports.powerOffLight = function(mac_add, req, res) {
 exports.getLightData = function(mac_add, req, res) {
 	db.getLightValues(mac_add, function(response){
 		res.send(response);
+	});
+}
+
+exports.getLightState = function(mac_add, req, res) {
+	db.getLightValues(mac_add, function(response){
+		if(response.data != null){
+			if(response.data.powered)
+				res.send('1');
+			else
+				res.send('0');
+		}
+		else {
+			res.send('');
+		}
 	});
 }
 

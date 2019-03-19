@@ -32,6 +32,20 @@ exports.getRadiatorData = function(mac_add, req, res) {
 	});
 }
 
+exports.getRadiatorState = function(mac_add, req, res) {
+	db.getTemperatureValues(mac_add, function(response){
+		if(response.data != null){
+			if(response.data.powered)
+				res.send('1');
+			else
+				res.send('0');
+		}
+		else {
+			res.send('');
+		}
+	});
+}
+
 function setRadiatorValue(mac_add, power, req, res) {
 	let formData = {"mac_add" : mac_add, "powered" : power}
 	db.setRadiatorValue(formData, function(response){

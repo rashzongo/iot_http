@@ -36,7 +36,6 @@ db.getTemperatureValues("1234567AZERTYU", function(response) {
 
 });*/
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -57,6 +56,9 @@ app.use(router);
 server.listen(port, host, function () {
   console.log('Application listening on : ' + host + ':' + port);
   db.countLights(function(data){
-  	console.log('response : ' + data);
+  	console.log('Nombre de lunmières : ' + data);
+  });
+  db.countRadiators(function(data){
+  	console.log('Nombre de radiateurs : ' + data);
   });
 })
